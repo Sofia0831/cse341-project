@@ -84,8 +84,8 @@ const updateBook = async (req, res) => {
     if (!ObjectId.isValid(req.params.id)){
         res.status(400).json('Must use a valid contact id to update a song.');
     }
-    const songId = new ObjectId(req.params.id);
-    const song = {
+    const bookId = new ObjectId(req.params.id);
+    const book = {
         title: req.body.title,
         author: req.body.author,
         language: req.body.language,
@@ -98,13 +98,13 @@ const updateBook = async (req, res) => {
     const response = await mongodb
     .getDatabase()
     .db()
-    .collection('favesongs')
-    .replaceOne({_id: songId}, song);
+    .collection('favebooks')
+    .replaceOne({_id: bookId}, book);
 
     if (response.modifiedCount > 0) {
         res.status(201).send();
     } else {
-        res.status(500).json(response.error || 'Some error occured while updating the song');
+        res.status(500).json(response.error || 'Some error occured while updating the book.');
     }
 };
 
