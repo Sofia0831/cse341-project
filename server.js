@@ -6,7 +6,7 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-const Validator = require('./helpers/validate');
+const { Validator } = require('./helpers/validate');
 Validator.register(
     'string_or_array',
     function(value, requirement, attribute) {
