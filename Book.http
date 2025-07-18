@@ -1,0 +1,58 @@
+GET http://localhost:3000
+
+######
+GET http://localhost:3000/books
+
+######
+GET http://localhost:3000/books/687a1e8b57b46bf1c9e1f7b0
+
+######
+GET  http://localhost:3000/books/687a69229c74ef0b73b95721
+
+#######
+POST http://localhost:3000/books HTTP/1.1
+content-type: application/json
+
+{
+    "title": "I Love You Since 1892",
+    "author": "Binibining Mia",
+    "language": [
+        "Filipino",
+        "English"
+    ],
+    "genre": [
+        "Romance",
+        "Young Adult",
+        "Historical Fiction"
+    ],
+    "desc": "Si Carmelita Montecarlos ay ang bunsong anak ng pinakamayamang angkan sa San Alfonso. Habang si Juanito Alfonso naman ay ang anak ng pinakamaimpluwensiya at makapangyarihang gobernadorcillo. Itinadhana silang mag-ibigan na pinagtibay ng kasunduan. Nakatakda silang ikasal sa ika-dalawampung kaarawan ni Carmelita. Ngunit sa mismong araw ng kanilang engrandeng kasal ay binaril si Juanito. At hindi na nalaman pa kung sino ang may sala nito. Inakala ng lahat na doon na nagtapos ang kanilang masaklap na kuwento. Na gaya ng kanilang mga kaluluwa ay sumasalangit na rin ang naudlot na pag-iibigan nilang dalawa. Ang hindi nila alam, may ibang plano ang tadhana. The laws of nature will bend. After more than 104 years, Carmela, the fourth generation of the Montecarlos clan will be born on a leap year - sa parehong araw ng kapanganakan ni Carmelita. A short trip to San Alfonso for her 20th birthday will give her rebellious life a whimsical twist. Through a diary, she'll go back in time. And the Carmela of 2016 will meet Juanito of 1892.",
+    "publisher": "ABS-CBN Books",
+    "publicationDate": "01-01-2018",
+    "pages": "287"
+}
+
+###
+PUT  http://localhost:3000/books/687a69229c74ef0b73b95721 HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "I Love You Since 1892",
+    "author": "UndeniablyGorgeous",
+    "language": [
+        "Filipino",
+        "English"
+    ],
+    "genre": [
+        "Romance",
+        "Young Adult",
+        "Historical Fiction"
+    ],
+    "desc": "Si Carmelita Montecarlos ay ang bunsong anak ng pinakamayamang angkan sa San Alfonso. Habang si Juanito Alfonso naman ay ang anak ng pinakamaimpluwensiya at makapangyarihang gobernadorcillo. Itinadhana silang mag-ibigan na pinagtibay ng kasunduan. Nakatakda silang ikasal sa ika-dalawampung kaarawan ni Carmelita. Ngunit sa mismong araw ng kanilang engrandeng kasal ay binaril si Juanito. At hindi na nalaman pa kung sino ang may sala nito. Inakala ng lahat na doon na nagtapos ang kanilang masaklap na kuwento. Na gaya ng kanilang mga kaluluwa ay sumasalangit na rin ang naudlot na pag-iibigan nilang dalawa. Ang hindi nila alam, may ibang plano ang tadhana. The laws of nature will bend. After more than 104 years, Carmela, the fourth generation of the Montecarlos clan will be born on a leap year - sa parehong araw ng kapanganakan ni Carmelita. A short trip to San Alfonso for her 20th birthday will give her rebellious life a whimsical twist. Through a diary, she'll go back in time. And the Carmela of 2016 will meet Juanito of 1892.",
+    "publisher": "ABS-CBN Books",
+    "publicationDate": "01-01-2018",
+    "pages": "287"
+}
+
+
+####
+DELETE http://localhost:3000/books/687a69229c74ef0b73b95721 HTTP/1.1

@@ -1,0 +1,37 @@
+{
+  "name": "cse341-project",
+  "version": "1.0.0",
+  "description": "Project 2 for CSE341",
+  "keywords": [
+    "project2",
+    "cse341"
+  ],
+  "homepage": "https://github.com/Sofia0831/cse341-project#readme",
+  "bugs": {
+    "url": "https://github.com/Sofia0831/cse341-project/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sofia0831/cse341-project.git"
+  },
+  "license": "ISC",
+  "author": "Sofia Florylle Pantas",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "mongodb": "^6.17.0",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "swagger-autogen": "^2.23.7"
+  }
+}
