@@ -6,6 +6,16 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
+const Validator = require('./helpers/validate');
+Validator.register(
+    'string_or_array',
+    function(value, requirement, attribute) {
+        return typeof value === 'string' || Array.isArray(value);
+    },
+    'The :attribute must be a string or an array.'
+);
+
+
 app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

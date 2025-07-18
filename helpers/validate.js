@@ -5,4 +5,7 @@ const validator = (body, rules, customMessages, callback) => {
   validation.fails(() => callback(validation.errors, false));
 };
 
-module.exports = validator;
+module.exports = {
+  validator,
+  Validator
+};
