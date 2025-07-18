@@ -5,10 +5,9 @@
     "description": "API of favorite songs and books",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "cse341-project2-2ocm.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http",
     "https"
   ],
   "paths": {
