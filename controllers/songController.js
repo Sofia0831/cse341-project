@@ -22,7 +22,7 @@ const getSingleSong = async (req, res) => {
     {
         if (!ObjectId.isValid(req.params.id))
         {
-            return res.status(400).json('Must use a valid id to find a song');
+            res.status(400).json('Must use a valid id to find a song');
         }
 
         const songId = new ObjectId(req.params.id);
@@ -78,7 +78,7 @@ const createSong = async (req, res) => {
 const updateSong = async (req, res) => {
     // #swagger.tags=['Songs']
     if (!ObjectId.isValid(req.params.id)){
-        res.status(400).json('Must use a valid contact id to update a song.');
+        res.status(400).json('Must use a valid song id to update a song.');
     }
     const songId = new ObjectId(req.params.id);
     const song = {
@@ -107,7 +107,7 @@ const updateSong = async (req, res) => {
 const deleteSong = async (req, res) => {
     // #swagger.tags=['Songs']
     if (!ObjectId.isValid(req.params.id)){
-        res.status(400).json('Must use a valid contact id to delete a song.');
+        res.status(400).json('Must use a valid song id to delete a song.');
     }
     const songId = new ObjectId(req.params.id);
     const response = await mongodb.getDatabase().db().collection('favesongs').deleteOne({ _id: songId});
