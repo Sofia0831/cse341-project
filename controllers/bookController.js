@@ -27,6 +27,7 @@ const getSingleBook = async (req, res) => {
         if (!ObjectId.isValid(req.params.id))
         {
             res.status(400).json('Must use a valid id to find a book');
+            return;
         }
 
         const bookId = new ObjectId(req.params.id);
@@ -56,69 +57,106 @@ const getSingleBook = async (req, res) => {
 
 const createBook = async (req, res) => {
     // #swagger.tags=['Books']
-    const book = {
-        title: req.body.title,
-        author: req.body.author,
-        language: req.body.language,
-        genre: req.body.genre,
-        desc: req.body.desc,
-        publisher: req.body.publisher,
-        publicationDate: req.body.publicationDate,
-        pages: req.body.pages
-    };
-    const response = await mongodb
-    .getDatabase()
-    .db()
-    .collection('favebooks')
-    .insertOne(book);
+    try{
+        const book = {
+            title: req.body.title,
+            author: req.body.author,
+            language: req.body.language,
+            genre: req.body.genre,
+            desc: req.body.desc,
+            publisher: req.body.publisher,
+            publicationDate: req.body.publicationDate,
+            pages: req.body.pages
+        };
+        const response = await mongodb
+        .getDatabase()
+        .db()
+        .collection('favebooks')
+        .insertOne(book);
 
-    if (response.acknowledged) {
-        res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occured while creating the book');
+        if (response.acknowledged) {
+        res.status(201).json({ id: response.insertedId });
+        } else {
+            res.status(500).json(response.error || 'Some error occured while creating the book');
+        }
+
+    } catch (error) {
+        console.error('Error in createBook:', error);
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message || 'Unknown database error'
+        });
     }
+
 };
 
 const updateBook = async (req, res) => {
     // #swagger.tags=['Books']
-    if (!ObjectId.isValid(req.params.id)){
-        res.status(400).json('Must use a valid book id to update a book.');
-    }
-    const bookId = new ObjectId(req.params.id);
-    const book = {
-        title: req.body.title,
-        author: req.body.author,
-        language: req.body.language,
-        genre: req.body.genre,
-        desc: req.body.desc,
-        publisher: req.body.publisher,
-        publicationDate: req.body.publicationDate,
-        pages: req.body.pages
-    };
-    const response = await mongodb
-    .getDatabase()
-    .db()
-    .collection('favebooks')
-    .replaceOne({_id: bookId}, book);
+    try {
+        if (!ObjectId.isValid(req.params.id)){
+            return res.status(400).json('Must use a valid book id to update a book.');
+        }
+        const bookId = new ObjectId(req.params.id);
+        const book = {
+            title: req.body.title,
+            author: req.body.author,
+            language: req.body.language,
+            genre: req.body.genre,
+            desc: req.body.desc,
+            publisher: req.body.publisher,
+            publicationDate: req.body.publicationDate,
+            pages: req.body.pages
+        };
+        const response = await mongodb
+        .getDatabase()
+        .db()
+        .collection('favebooks')
+        .replaceOne({_id: bookId}, book);
 
-    if (response.modifiedCount > 0) {
-        res.status(201).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occured while updating the book.');
+        if (response.matchedCount === 0) {
+            return res.status(404).json({ message: 'Book not found for update.' });
+        }
+        else if (response.modifiedCount > 0) {
+            res.status(200).json({ message: 'Book updated successfully.' });
+        } 
+        else {
+            res.status(200).json({ message: 'Book found, but no changes were applied.' });
+        }
+
+    } catch (error) {
+        console.error('Error in updateBook:', error);
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message || 'Unknown database error'
+        });
     }
 };
 
 const deleteBook = async (req, res) => {
     //#swagger.tags=['Books']
-    if (!ObjectId.isValid(req.params.id)){
-        res.status(400).json('Must use a valid book id to delete a book.');
-    }
-    const bookId = new ObjectId(req.params.id);
-    const response = await mongodb.getDatabase().db().collection('favebooks').deleteOne({ _id: bookId});
-    if (response.deletedCount > 0) {
-        res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occured while deleting the book');
+    try {
+        if (!ObjectId.isValid(req.params.id)){
+            return res.status(400).json('Must use a valid book id to delete a book.');
+        }
+        const bookId = new ObjectId(req.params.id);
+        const response = await mongodb.getDatabase().db().collection('favebooks').deleteOne({ _id: bookId});
+
+        if (response.deletedCount > 0) {
+            res.status(204).send();
+        }
+        else if (response.deletedCount === 0) {
+            res.status(404).json({ message: 'Book not found for deletion.' }); 
+        }
+        else {
+            res.status(500).json(response.error || 'Some error occured while deleting the book');
+        }
+    
+    } catch (error) {
+        console.error('Error in deleteBook:', error);
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message || 'Unknown database error'
+        });
     }
 };
 
