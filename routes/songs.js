@@ -3,13 +3,14 @@ const router = express.Router();
 
 const songCont = require('../controllers/songController');
 const validation = require('../middleware/validate');
+const { isAuthenticated } = require("../middleware/authenticate");
 
 router.get('/', songCont.getAllSongs);
 router.get('/:id', songCont.getSingleSong);
 
-router.post('/', validation.saveSong, songCont.createSong);
-router.put('/:id', validation.saveSong, songCont.updateSong);
-router.delete('/:id', songCont.deleteSong);
+router.post('/', isAuthenticated, validation.saveSong, songCont.createSong);
+router.put('/:id', isAuthenticated, validation.saveSong, songCont.updateSong);
+router.delete('/:id', isAuthenticated, songCont.deleteSong);
 
 
 module.exports = router;
